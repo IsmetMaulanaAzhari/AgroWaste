@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('image')->nullable();
+            $table->string('image')->nullable(); // Menambahkan kolom untuk gambar
             $table->decimal('price', 10, 2)->nullable();
             $table->integer('stock')->default(0);
             $table->enum('category', ['organic', 'recycled', 'composted'])->default('organic');

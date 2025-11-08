@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Head, useForm } from '@inertiajs/react';
+import { FaEye, FaEyeSlash, FaLock, FaEnvelope } from 'react-icons/fa';
 
 export default function AdminLogin() {
     const { data, setData, post, processing, errors } = useForm({
@@ -7,6 +8,7 @@ export default function AdminLogin() {
         password: '',
         remember: false,
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const submit = (e) => {
         e.preventDefault();
@@ -16,53 +18,70 @@ export default function AdminLogin() {
     return (
         <>
             <Head title="Admin Login" />
-            
-            <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8">
-                    <div>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 py-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full space-y-8 bg-white p-6 rounded-lg shadow-lg">
+                    <div className="text-center">
+                        <div className="text-blue-500 text-5xl mb-4">
+                            <FaLock />
+                        </div>
+                        <h2 className="text-3xl font-extrabold text-gray-900">
                             Admin Login
                         </h2>
-                        <p className="mt-2 text-center text-sm text-gray-600">
+                        <p className="mt-2 text-sm text-gray-600">
                             Masuk ke panel admin AgroWaste
                         </p>
                     </div>
                     <form className="mt-8 space-y-6" onSubmit={submit}>
-                        <div className="rounded-md shadow-sm -space-y-px">
-                            <div>
-                                <label htmlFor="email" className="sr-only">
+                        <div className="rounded-md shadow-sm">
+                            <div className="mb-4 relative">
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                     Email
                                 </label>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Email"
-                                    value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
-                                />
+                                <div className="relative">
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        autoComplete="email"
+                                        required
+                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        placeholder="Email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                    />
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                                        <FaEnvelope />
+                                    </div>
+                                </div>
                                 {errors.email && (
                                     <div className="mt-1 text-sm text-red-600">{errors.email}</div>
                                 )}
                             </div>
-                            <div>
-                                <label htmlFor="password" className="sr-only">
+                            <div className="mb-4 relative">
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                                     Password
                                 </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Password"
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                />
+                                <div className="relative">
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        autoComplete="current-password"
+                                        required
+                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        placeholder="Password"
+                                        value={data.password}
+                                        onChange={(e) => setData('password', e.target.value)}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700"
+                                    >
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </button>
+                                </div>
                                 {errors.password && (
                                     <div className="mt-1 text-sm text-red-600">{errors.password}</div>
                                 )}

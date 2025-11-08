@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('image')->nullable();
+            $table->string('image')->nullable(); // Menambahkan kolom untuk gambar
             $table->enum('type', ['organic', 'plastic', 'paper', 'metal', 'glass'])->default('organic');
             $table->text('recycling_process')->nullable();
             $table->text('benefits')->nullable();

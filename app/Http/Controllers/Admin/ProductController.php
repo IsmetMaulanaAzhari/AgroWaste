@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Logs\Logger;
 
 class ProductController extends Controller
 {
@@ -39,8 +40,6 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
             'category' => 'required|in:organic,recycled,composted',
             'is_active' => 'boolean',
         ]);
@@ -79,12 +78,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        \Log::info('Update request payload:', $request->all());
+        \Log::info('Existing product data:', $product->toArray());
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
             'category' => 'required|in:organic,recycled,composted',
             'is_active' => 'boolean',
         ]);
@@ -99,6 +99,8 @@ class ProductController extends Controller
         }
 
         $product->update($validated);
+
+        \Log::info('Updated product data:', $product->toArray());
 
         return redirect()->route('admin.products.index')->with('message', 'Produk berhasil diupdate');
     }
