@@ -11,8 +11,10 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
 
     const navigation = [
         { name: 'Dashboard', href: route('admin.dashboard'), icon: '📊' },
-        { name: 'Products', href: route('admin.products.index'), icon: '🛍️' },
-        { name: 'Wastes', href: route('admin.wastes.index'), icon: '♻️' },
+        { name: 'Learning', href: route('admin.learning.index'), icon: '📚' },
+        { name: 'Modules', href: route('admin.learning.modules.index'), icon: '📖' },
+        { name: 'Videos', href: route('admin.learning.videos.index'), icon: '🎬' },
+        { name: 'Quizzes', href: route('admin.learning.quizzes.index'), icon: '📝' },
     ];
 
     return (

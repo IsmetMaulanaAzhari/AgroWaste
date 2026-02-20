@@ -2,9 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminAuthController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\WasteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,11 +15,13 @@ Route::get('/', function () {
     ]);
 });
 
+// User Dashboard
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+// User Profile Routes
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -30,16 +29,25 @@ Route::middleware('auth')->group(function () {
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Auth routes
-    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AdminAuthController::class, 'login']);
-    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+    // Guest routes (login)
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('login', [AdminAuthController::class, 'showLogin'])->name('login');
+        Route::post('login', [AdminAuthController::class, 'login'])->name('login.submit');
+    });
 
     // Protected admin routes
-    Route::middleware('admin.auth')->group(function () {
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('products', ProductController::class);
-        Route::resource('wastes', WasteController::class);
+    Route::middleware('auth:admin')->group(function () {
+        Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+        Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+        
+        // Learning Management
+        Route::prefix('learning')->name('learning.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\LearningController::class, 'index'])->name('index');
+            Route::resource('modules', App\Http\Controllers\Admin\LearningModuleController::class);
+            Route::resource('videos', App\Http\Controllers\Admin\VideoController::class);
+            Route::resource('quizzes', App\Http\Controllers\Admin\QuizController::class);
+            Route::resource('quizzes.questions', App\Http\Controllers\Admin\QuizQuestionController::class);
+        });
     });
 });
 

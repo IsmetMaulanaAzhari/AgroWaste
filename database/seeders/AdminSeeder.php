@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -16,7 +15,7 @@ class AdminSeeder extends Seeder
         \App\Models\Admin::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('password'), // Mengenkripsi password
+            'password' => 'password', // Model sudah auto-hash dengan cast
         ]);
 
         // Create sample products

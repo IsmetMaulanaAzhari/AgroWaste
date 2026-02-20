@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Welcome() {
@@ -16,8 +16,8 @@ export default function Welcome() {
             <Head title="Dashboard User" />
             <div className="min-h-screen bg-gray-100 flex">
                 {/* Sidebar */}
-                <div className="w-64 bg-white shadow-lg">
-                    <div className="p-6">
+                <div className="w-64 bg-white shadow-lg flex flex-col">
+                    <div className="p-6 flex-1">
                         <h2 className="text-xl font-bold text-gray-800 mb-8">Navbar</h2>
                         <nav className="space-y-2">
                             {menuItems.map((item) => (
@@ -35,6 +35,16 @@ export default function Welcome() {
                                 </button>
                             ))}
                         </nav>
+                    </div>
+                    
+                    {/* Admin Login Button */}
+                    <div className="p-6 border-t">
+                        <Link
+                            href="/admin/login"
+                            className="w-full flex items-center justify-center px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+                        >
+                            🔐 Admin Login
+                        </Link>
                     </div>
                 </div>
 

@@ -23,16 +23,13 @@ class AdminAuthController extends Controller
             'password' => 'required',
         ]);
 
-        $admin = Admin::where('email', $request->email)->first();
-
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            Auth::guard('admin')->login($admin, $request->boolean('remember'));
-            
+        if (Auth::guard('admin')->attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors([
-            'email' => 'Kredensial yang diberikan tidak cocok dengan catatan kami.',
+            'email' => 'Email atau password salah.',
         ]);
     }
 

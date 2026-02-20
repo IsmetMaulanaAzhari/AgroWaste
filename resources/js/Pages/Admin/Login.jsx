@@ -12,23 +12,23 @@ export default function AdminLogin() {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('admin.login'));
+        post(route('admin.login.submit'));
     };
 
     return (
         <>
             <Head title="Admin Login" />
 
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8 bg-white p-6 rounded-lg shadow-lg">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-green-600 py-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
                     <div className="text-center">
-                        <div className="text-blue-500 text-5xl mb-4">
+                        <div className="text-blue-600 dark:text-blue-400 text-5xl mb-4">
                             <FaLock />
                         </div>
-                        <h2 className="text-3xl font-extrabold text-gray-900">
+                        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
                             Admin Login
                         </h2>
-                        <p className="mt-2 text-sm text-gray-600">
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                             Masuk ke panel admin AgroWaste
                         </p>
                     </div>
@@ -108,7 +108,7 @@ export default function AdminLogin() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
                             >
                                 {processing ? 'Signing in...' : 'Sign in'}
                             </button>
