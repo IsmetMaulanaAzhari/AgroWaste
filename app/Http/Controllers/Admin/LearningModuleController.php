@@ -46,7 +46,7 @@ class LearningModuleController extends Controller
 
         LearningModule::create($validated);
 
-        return redirect()->route('admin.learning-modules.index')
+        return redirect()->route('admin.learning.modules.index')
             ->with('message', 'Modul pembelajaran berhasil dibuat');
     }
 
@@ -82,7 +82,7 @@ class LearningModuleController extends Controller
 
         $learningModule->update($validated);
 
-        return redirect()->route('admin.learning-modules.index')
+        return redirect()->route('admin.learning.modules.index')
             ->with('message', 'Modul pembelajaran berhasil diperbarui');
     }
 
@@ -101,7 +101,7 @@ class LearningModuleController extends Controller
 
         $learningModule->delete();
 
-        return redirect()->route('admin.learning-modules.index')
+        return redirect()->route('admin.learning.modules.index')
             ->with('message', 'Modul pembelajaran berhasil dihapus');
     }
 }

@@ -21,14 +21,14 @@ export default function ModuleForm({ module = null, onSuccess }) {
         e.preventDefault();
         
         if (module) {
-            put(route("admin.modules.update", module.id), {
+            put(route("admin.learning.modules.update", module.id), {
                 onSuccess: () => {
                     reset();
                     onSuccess();
                 }
             });
         } else {
-            post(route("admin.modules.store"), {
+            post(route("admin.learning.modules.store"), {
                 onSuccess: () => {
                     reset();
                     onSuccess();

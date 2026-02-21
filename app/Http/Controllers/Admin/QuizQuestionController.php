@@ -42,7 +42,7 @@ class QuizQuestionController extends Controller
 
         $quiz->questions()->create($validated);
 
-        return redirect()->route('admin.quizzes.questions.index', $quiz)
+        return redirect()->route('admin.learning.quizzes.show', $quiz)
             ->with('message', 'Pertanyaan berhasil ditambahkan');
     }
 
@@ -63,7 +63,7 @@ class QuizQuestionController extends Controller
 
         $question->update($validated);
 
-        return redirect()->route('admin.quizzes.questions.index', $quiz)
+        return redirect()->route('admin.learning.quizzes.show', $quiz)
             ->with('message', 'Pertanyaan berhasil diperbarui');
     }
 
@@ -74,7 +74,7 @@ class QuizQuestionController extends Controller
     {
         $question->delete();
 
-        return redirect()->route('admin.quizzes.questions.index', $quiz)
+        return redirect()->route('admin.learning.quizzes.show', $quiz)
             ->with('message', 'Pertanyaan berhasil dihapus');
     }
 

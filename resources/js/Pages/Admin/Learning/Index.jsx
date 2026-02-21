@@ -18,19 +18,19 @@ export default function Index({ modules }) {
     
     const handleDelete = (moduleId) => {
         if (confirm("Apakah Anda yakin ingin menghapus modul ini?")) {
-            router.delete(route("admin.modules.destroy", moduleId));
+            router.delete(route("admin.learning.modules.destroy", moduleId));
         }
     };
 
     const handleDeleteVideo = (videoId) => {
         if (confirm("Apakah Anda yakin ingin menghapus video ini?")) {
-            router.delete(route("admin.videos.destroy", videoId));
+            router.delete(route("admin.learning.videos.destroy", videoId));
         }
     };
 
     const handleDeleteQuiz = (quizId) => {
         if (confirm("Apakah Anda yakin ingin menghapus kuis ini?")) {
-            router.delete(route("admin.quizzes.destroy", quizId));
+            router.delete(route("admin.learning.quizzes.destroy", quizId));
         }
     };
 

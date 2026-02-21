@@ -20,14 +20,14 @@ export default function VideoForm({ moduleId, video = null, onSuccess }) {
         e.preventDefault();
         
         if (video) {
-            put(route("admin.videos.update", video.id), {
+            put(route("admin.learning.videos.update", video.id), {
                 onSuccess: () => {
                     reset();
                     onSuccess();
                 }
             });
         } else {
-            post(route("admin.videos.store"), {
+            post(route("admin.learning.videos.store"), {
                 onSuccess: () => {
                     reset();
                     onSuccess();

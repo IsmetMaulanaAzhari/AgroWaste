@@ -53,7 +53,7 @@ class VideoController extends Controller
 
         Video::create($validated);
 
-        return redirect()->route('admin.videos.index')
+        return redirect()->route('admin.learning.videos.index')
             ->with('message', 'Video berhasil ditambahkan');
     }
 
@@ -83,7 +83,7 @@ class VideoController extends Controller
 
         $video->update($validated);
 
-        return redirect()->route('admin.videos.index')
+        return redirect()->route('admin.learning.videos.index')
             ->with('message', 'Video berhasil diperbarui');
     }
 
@@ -99,7 +99,7 @@ class VideoController extends Controller
 
         $video->delete();
 
-        return redirect()->route('admin.videos.index')
+        return redirect()->route('admin.learning.videos.index')
             ->with('message', 'Video berhasil dihapus');
     }
 }

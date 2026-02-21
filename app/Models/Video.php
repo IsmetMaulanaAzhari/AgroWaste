@@ -26,4 +26,9 @@ class Video extends Model
     {
         return $this->belongsTo(LearningModule::class, 'learning_module_id');
     }
+
+    public function learningModule()
+    {
+        return $this->belongsTo(LearningModule::class, 'learning_module_id');
+    }
 }

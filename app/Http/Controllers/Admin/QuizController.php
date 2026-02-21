@@ -61,7 +61,7 @@ class QuizController extends Controller
 
         Quiz::create($validated);
 
-        return redirect()->route('admin.quizzes.index')
+        return redirect()->route('admin.learning.quizzes.index')
             ->with('message', 'Kuis berhasil dibuat');
     }
 
@@ -82,7 +82,7 @@ class QuizController extends Controller
 
         $quiz->update($validated);
 
-        return redirect()->route('admin.quizzes.index')
+        return redirect()->route('admin.learning.quizzes.index')
             ->with('message', 'Kuis berhasil diperbarui');
     }
 
@@ -94,7 +94,7 @@ class QuizController extends Controller
         $quiz->questions()->delete(); // Delete all related questions
         $quiz->delete();
 
-        return redirect()->route('admin.quizzes.index')
+        return redirect()->route('admin.learning.quizzes.index')
             ->with('message', 'Kuis berhasil dihapus');
     }
 }

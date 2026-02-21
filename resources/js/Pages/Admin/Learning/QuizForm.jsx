@@ -20,14 +20,14 @@ export default function QuizForm({ moduleId, quiz = null, onSuccess }) {
         e.preventDefault();
         
         if (quiz) {
-            put(route("admin.quizzes.update", quiz.id), {
+            put(route("admin.learning.quizzes.update", quiz.id), {
                 onSuccess: () => {
                     reset();
                     onSuccess();
                 }
             });
         } else {
-            post(route("admin.quizzes.store"), {
+            post(route("admin.learning.quizzes.store"), {
                 onSuccess: () => {
                     reset();
                     onSuccess();
