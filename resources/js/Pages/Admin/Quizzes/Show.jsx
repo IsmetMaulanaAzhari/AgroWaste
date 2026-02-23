@@ -22,7 +22,7 @@ function QuestionForm({ quizId, question = null, onSuccess }) {
             existingOptions[2] || "",
             existingOptions[3] || "",
         ],
-        correct_answer: question?.correct_answer || "0",
+        correct_answer: question?.correct_answer?.toString() || "0",
         points: question?.points || 1,
         explanation: question?.explanation || "",
         order: question?.order || 0,
@@ -72,74 +72,81 @@ function QuestionForm({ quizId, question = null, onSuccess }) {
                     value={data.question}
                     onChange={e => setData("question", e.target.value)}
                     rows={3}
+                    placeholder="Tulis pertanyaan di sini..."
                 />
                 <InputError message={errors.question} />
             </div>
 
-            {[0, 1, 2, 3].map((index) => (
-                <div key={index}>
-                    <Label htmlFor={`option_${index}`}>Pilihan {String.fromCharCode(65 + index)}</Label>
-                    <Input
-                        id={`option_${index}`}
-                        value={data.options[index]}
-                        onChange={e => updateOption(index, e.target.value)}
-                    />
-                    <InputError message={errors[`options.${index}`]} />
-                </div>
-            ))}
-
-            <div>
-                <Label htmlFor="correct_answer">Jawaban Benar</Label>
-                <select
-                    id="correct_answer"
-                    value={data.correct_answer}
-                    onChange={e => setData("correct_answer", e.target.value)}
-                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                >
-                    <option value="0">A</option>
-                    <option value="1">B</option>
-                    <option value="2">C</option>
-                    <option value="3">D</option>
-                </select>
+            <div className="space-y-3">
+                <Label>Pilihan Jawaban <span className="text-gray-500 font-normal">(Klik radio untuk menandai jawaban benar)</span></Label>
+                {[0, 1, 2, 3].map((index) => (
+                    <div key={index} className={`flex items-center gap-3 p-3 rounded-lg border ${data.correct_answer === String(index) ? 'border-green-500 bg-green-50' : 'border-gray-200'}`}>
+                        <input
+                            type="radio"
+                            name="correct_answer"
+                            id={`correct_${index}`}
+                            checked={data.correct_answer === String(index)}
+                            onChange={() => setData("correct_answer", String(index))}
+                            className="w-4 h-4 text-green-600 cursor-pointer"
+                        />
+                        <span className="font-semibold text-gray-700 w-6">{String.fromCharCode(65 + index)}.</span>
+                        <Input
+                            id={`option_${index}`}
+                            value={data.options[index]}
+                            onChange={e => updateOption(index, e.target.value)}
+                            placeholder={`Tulis pilihan ${String.fromCharCode(65 + index)}...`}
+                            className="flex-1"
+                        />
+                        {data.correct_answer === String(index) && (
+                            <span className="text-green-600 text-sm font-medium">✓ Benar</span>
+                        )}
+                    </div>
+                ))}
                 <InputError message={errors.correct_answer} />
+                <InputError message={errors.options} />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <Label htmlFor="points">Poin</Label>
+                    <Input
+                        id="points"
+                        type="number"
+                        min="1"
+                        value={data.points}
+                        onChange={e => setData("points", e.target.value)}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Nilai untuk jawaban benar</p>
+                    <InputError message={errors.points} />
+                </div>
+
+                <div>
+                    <Label htmlFor="order">Urutan</Label>
+                    <Input
+                        id="order"
+                        type="number"
+                        min="0"
+                        value={data.order}
+                        onChange={e => setData("order", e.target.value)}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Posisi soal dalam kuis</p>
+                    <InputError message={errors.order} />
+                </div>
             </div>
 
             <div>
-                <Label htmlFor="points">Poin</Label>
-                <Input
-                    id="points"
-                    type="number"
-                    min="1"
-                    value={data.points}
-                    onChange={e => setData("points", e.target.value)}
-                />
-                <InputError message={errors.points} />
-            </div>
-
-            <div>
-                <Label htmlFor="explanation">Penjelasan (Opsional)</Label>
+                <Label htmlFor="explanation">Penjelasan Jawaban <span className="text-gray-500 font-normal">(Opsional)</span></Label>
                 <Textarea
                     id="explanation"
                     value={data.explanation}
                     onChange={e => setData("explanation", e.target.value)}
                     rows={2}
+                    placeholder="Penjelasan mengapa jawaban tersebut benar..."
                 />
                 <InputError message={errors.explanation} />
             </div>
 
-            <div>
-                <Label htmlFor="order">Urutan</Label>
-                <Input
-                    id="order"
-                    type="number"
-                    min="0"
-                    value={data.order}
-                    onChange={e => setData("order", e.target.value)}
-                />
-                <InputError message={errors.order} />
-            </div>
-
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 pt-4 border-t">
                 <Button type="button" variant="outline" onClick={onSuccess}>
                     Batal
                 </Button>
