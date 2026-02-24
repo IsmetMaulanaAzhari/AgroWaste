@@ -2,23 +2,43 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\User\LearningController;
+use App\Models\LearningModule;
+use App\Models\Video;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'auth' => [
+            'user' => auth()->user(),
+        ],
+        'stats' => [
+            'modules' => LearningModule::where('is_active', true)->count(),
+            'videos' => Video::where('is_active', true)->count(),
+            'users' => User::count(),
+        ],
     ]);
 });
 
 // User Dashboard
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [LearningController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+// User Learning Routes
+Route::middleware(['auth', 'verified'])->prefix('learning')->name('learning.')->group(function () {
+    Route::get('/', [LearningController::class, 'index'])->name('index');
+    Route::get('/modules', [LearningController::class, 'modules'])->name('modules');
+    Route::get('/modules/{module}', [LearningController::class, 'showModule'])->name('modules.show');
+    Route::get('/videos', [LearningController::class, 'videos'])->name('videos');
+    Route::get('/videos/{video}', [LearningController::class, 'showVideo'])->name('videos.show');
+    Route::get('/quizzes', [LearningController::class, 'quizzes'])->name('quizzes');
+    Route::get('/quizzes/{quiz}', [LearningController::class, 'showQuiz'])->name('quizzes.show');
+    Route::post('/quizzes/{quiz}/submit', [LearningController::class, 'submitQuiz'])->name('quizzes.submit');
+});
 
 // User Profile Routes
 Route::middleware(['auth', 'verified'])->group(function () {
