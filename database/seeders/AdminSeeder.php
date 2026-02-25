@@ -12,12 +12,6 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Admin::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => 'password', // Model sudah auto-hash dengan cast
-        ]);
-
         // Create sample products
         \App\Models\Product::create([
             'name' => 'Pupuk Kompos Organik',

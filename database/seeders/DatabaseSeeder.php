@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Create Admin
+        Admin::create([
+            'name' => 'Administrator',
+            'email' => 'admin@agrowaste.com',
+            'password' => Hash::make('admin123'),
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Create Users
+        User::create([
+            'name' => 'User Demo',
+            'email' => 'user@agrowaste.com',
+            'password' => Hash::make('user123'),
+            'email_verified_at' => now(),
+        ]);
+
+        User::create([
+            'name' => 'Budi Santoso',
+            'email' => 'budi@gmail.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        User::create([
+            'name' => 'Siti Rahayu',
+            'email' => 'siti@gmail.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
         $this->call([
