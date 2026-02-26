@@ -1,9 +1,9 @@
 import { Head, router } from "@inertiajs/react";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Button } from "@/Components/ui/button";
-import { PlusIcon, PencilIcon, TrashIcon, VideoCameraIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, PencilIcon, TrashIcon, VideoCameraIcon, DocumentTextIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/Components/ui/dialog";
+import { Dialog, DialogContent, DialogClose } from "@/Components/ui/dialog";
 import { Card, CardContent, CardFooter } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -170,12 +170,16 @@ export default function Index({ modules }) {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {modules?.data?.map((module) => (
                             <Card key={module.id} className="overflow-hidden">
-                                {module.thumbnail && (
+                                {module.thumbnail ? (
                                     <img 
                                         src={`/storage/${module.thumbnail}`} 
                                         alt={module.title}
                                         className="w-full h-48 object-cover"
                                     />
+                                ) : (
+                                    <div className="w-full h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                                        <BookOpenIcon className="h-16 w-16 text-white" />
+                                    </div>
                                 )}
                                 <CardContent className="p-4">
                                     <h3 className="text-lg font-semibold mb-2">{module.title}</h3>
@@ -222,6 +226,7 @@ export default function Index({ modules }) {
 
                     <Dialog open={open} onOpenChange={handleClose}>
                         <DialogContent className="max-w-2xl">
+                            <DialogClose onClick={handleClose} />
                             <ModuleForm 
                                 module={editModule}
                                 onSuccess={handleClose} 

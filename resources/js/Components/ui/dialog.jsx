@@ -6,28 +6,37 @@ const Dialog = ({ open, onOpenChange, children }) => {
   if (!open) return null
   
   return (
-    <div className="fixed inset-0 z-50">
+    <div className="fixed inset-0 z-50 overflow-y-auto">
       <div 
-        className="fixed inset-0 bg-black/80" 
+        className="fixed inset-0 bg-black/50" 
         onClick={() => onOpenChange?.(false)}
       />
-      {children}
+      <div className="flex min-h-full items-center justify-center p-4">
+        {children}
+      </div>
     </div>
   )
 }
 
 const DialogContent = React.forwardRef(
-  ({ className, children, ...props }, ref) => {
+  ({ className, children, onClose, ...props }, ref) => {
+    // Get onOpenChange from context or props
+    const handleClose = () => {
+      if (onClose) onClose();
+    };
+    
     return (
       <div
         ref={ref}
         className={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg",
+          "relative z-50 w-full max-w-lg bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto",
           className
         )}
         {...props}
       >
-        {children}
+        <div className="p-6">
+          {children}
+        </div>
       </div>
     )
   }
@@ -36,7 +45,7 @@ DialogContent.displayName = "DialogContent"
 
 const DialogHeader = ({ className, ...props }) => (
   <div
-    className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)}
+    className={cn("flex flex-col space-y-1.5 text-center sm:text-left mb-4", className)}
     {...props}
   />
 )
@@ -44,7 +53,7 @@ DialogHeader.displayName = "DialogHeader"
 
 const DialogFooter = ({ className, ...props }) => (
   <div
-    className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
+    className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4 pt-4 border-t", className)}
     {...props}
   />
 )
@@ -62,22 +71,24 @@ DialogTitle.displayName = "DialogTitle"
 const DialogDescription = React.forwardRef(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-gray-500", className)}
     {...props}
   />
 ))
 DialogDescription.displayName = "DialogDescription"
 
-const DialogClose = React.forwardRef(({ className, ...props }, ref) => (
+const DialogClose = React.forwardRef(({ className, onClick, ...props }, ref) => (
   <button
     ref={ref}
+    type="button"
+    onClick={onClick}
     className={cn(
-      "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none",
+      "absolute right-4 top-4 rounded-full p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500",
       className
     )}
     {...props}
   >
-    <XMarkIcon className="h-4 w-4" />
+    <XMarkIcon className="h-5 w-5" />
     <span className="sr-only">Close</span>
   </button>
 ))

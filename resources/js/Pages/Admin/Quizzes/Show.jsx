@@ -3,7 +3,7 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import { Button } from "@/Components/ui/button";
 import { PlusIcon, PencilIcon, TrashIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/Components/ui/dialog";
+import { Dialog, DialogContent, DialogClose } from "@/Components/ui/dialog";
 import { Card, CardContent } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -261,6 +261,7 @@ export default function Show({ quiz }) {
 
                     <Dialog open={open} onOpenChange={handleClose}>
                         <DialogContent className="max-w-2xl">
+                            <DialogClose onClick={handleClose} />
                             <QuestionForm 
                                 quizId={quiz.id}
                                 question={editQuestion}

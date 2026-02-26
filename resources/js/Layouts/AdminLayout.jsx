@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function AdminLayout({ children, title = 'Admin Panel' }) {
-    const [sidebarOpen, setSidebarOpen] = useState(true); // Set default to true
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const { post } = useForm();
 
     const logout = () => {
@@ -23,11 +23,11 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
             
             <div className="min-h-screen bg-gray-50 flex">
                 {/* Sidebar for mobile */}
-                <div className={`lg:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${
+                <div className={`lg:hidden fixed inset-y-0 left-0 z-50 w-64 bg-gray-800 shadow-lg transform ${
                     sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 } transition-transform duration-300`}>
-                    <div className="flex items-center h-16 bg-blue-600 px-4">
-                        <h1 className="text-xl font-bold text-white flex-1">AgroWaste Admin</h1>
+                    <div className="flex items-center h-16 bg-gray-900 px-4">
+                        <h1 className="text-xl font-bold text-green-400 flex-1">AgroWaste Admin</h1>
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
                             className="text-white focus:outline-none"
@@ -42,7 +42,7 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
                                     <Link
                                         key={item.name}
                                         href={item.href}
-                                        className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                        className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
                                     >
                                         <span className="mr-3 text-lg">{item.icon}</span>
                                         {item.name}
@@ -50,11 +50,11 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
                                 ))}
                             </div>
                         </div>
-                        <div className="px-4 py-4 border-t border-gray-200">
-                            <span className="block text-sm text-gray-500 mb-2">Admin</span>
+                        <div className="px-4 py-4 border-t border-gray-700">
+                            <span className="block text-sm text-gray-400 mb-2">Admin</span>
                             <button
                                 onClick={logout}
-                                className="w-full text-left text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md transition-colors"
+                                className="w-full text-left text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md transition-colors"
                             >
                                 Logout
                             </button>
@@ -63,9 +63,9 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
                 </div>
 
                 {/* Sidebar for desktop */}
-                <div className={`hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 bg-white shadow-lg transform transition-all duration-300 ${sidebarOpen ? 'lg:w-64' : 'lg:w-16'}`}>
-                    <div className="flex items-center h-16 bg-blue-600 px-4">
-                        <h1 className={`text-xl font-bold text-white transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 hidden'}`}>AgroWaste Admin</h1>
+                <div className={`hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 bg-gray-800 shadow-lg transform transition-all duration-300 ${sidebarOpen ? 'lg:w-64' : 'lg:w-16'}`}>
+                    <div className="flex items-center h-16 bg-gray-900 px-4">
+                        <h1 className={`text-xl font-bold text-green-400 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 hidden'}`}>AgroWaste Admin</h1>
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
                             className="text-white focus:outline-none ml-auto"
@@ -80,7 +80,7 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
                                     <Link
                                         key={item.name}
                                         href={item.href}
-                                        className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                        className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
                                         title={item.name}
                                     >
                                         <span className="text-lg">{item.icon}</span>
@@ -91,11 +91,11 @@ export default function AdminLayout({ children, title = 'Admin Panel' }) {
                                 ))}
                             </div>
                         </div>
-                        <div className={`px-4 py-4 border-t border-gray-200 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 hidden'}`}>
-                            <span className="block text-sm text-gray-500 mb-2">Admin</span>
+                        <div className={`px-4 py-4 border-t border-gray-700 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 hidden'}`}>
+                            <span className="block text-sm text-gray-400 mb-2">Admin</span>
                             <button
                                 onClick={logout}
-                                className="w-full text-left text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md transition-colors"
+                                className="w-full text-left text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md transition-colors"
                             >
                                 Logout
                             </button>

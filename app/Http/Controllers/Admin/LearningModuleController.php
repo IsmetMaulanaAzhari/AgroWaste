@@ -15,7 +15,9 @@ class LearningModuleController extends Controller
      */
     public function index()
     {
-        $modules = LearningModule::orderBy('order')->paginate(10);
+        $modules = LearningModule::withCount(['videos', 'quizzes'])
+            ->orderBy('order')
+            ->paginate(10);
         
         return Inertia::render('Admin/LearningModules/Index', [
             'modules' => $modules
