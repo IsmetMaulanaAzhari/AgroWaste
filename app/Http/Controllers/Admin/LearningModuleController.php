@@ -32,6 +32,7 @@ class LearningModuleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'content' => 'nullable|string',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'document' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
             'order' => 'nullable|integer|min:0',
@@ -60,6 +61,7 @@ class LearningModuleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'content' => 'nullable|string',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'document' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
             'order' => 'nullable|integer|min:0',

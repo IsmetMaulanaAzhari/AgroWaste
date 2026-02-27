@@ -16,6 +16,7 @@ function ModuleForm({ module = null, onSuccess }) {
     const { data, setData, post, processing, errors, reset, progress } = useForm({
         title: module?.title || "",
         description: module?.description || "",
+        content: module?.content || "",
         thumbnail: null,
         document: null,
         order: module?.order || 0,
@@ -58,14 +59,40 @@ function ModuleForm({ module = null, onSuccess }) {
             </div>
 
             <div>
-                <Label htmlFor="description">Deskripsi</Label>
+                <Label htmlFor="description">Deskripsi Singkat</Label>
                 <Textarea
                     id="description"
                     value={data.description}
                     onChange={e => setData("description", e.target.value)}
-                    rows={4}
+                    rows={3}
+                    placeholder="Deskripsi singkat tentang modul ini..."
                 />
                 <InputError message={errors.description} />
+            </div>
+
+            <div>
+                <Label htmlFor="content">Materi Pembelajaran</Label>
+                <Textarea
+                    id="content"
+                    value={data.content}
+                    onChange={e => setData("content", e.target.value)}
+                    rows={10}
+                    placeholder="Tulis materi pembelajaran di sini...
+
+Contoh format:
+## Pendahuluan
+Penjelasan singkat tentang topik...
+
+## Langkah-langkah
+1. Langkah pertama
+2. Langkah kedua
+3. Langkah ketiga
+
+## Kesimpulan
+Ringkasan materi..."
+                />
+                <p className="text-xs text-gray-500 mt-1">Tulis materi yang akan dibaca oleh user. Gunakan format yang jelas.</p>
+                <InputError message={errors.content} />
             </div>
 
             <div>

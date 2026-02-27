@@ -12,6 +12,10 @@ class LearningModule extends Model
     protected $fillable = [
         'title',
         'description',
+        'content',
+        'thumbnail',
+        'document',
+        'order',
         'is_active',
     ];
 
