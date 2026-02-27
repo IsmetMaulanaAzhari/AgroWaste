@@ -13,36 +13,34 @@ import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 
 function ModuleForm({ module = null, onSuccess }) {
-    const { data, setData, post, put, processing, errors, reset, progress } = useForm({
+    const { data, setData, post, processing, errors, reset, progress } = useForm({
         title: module?.title || "",
         description: module?.description || "",
         thumbnail: null,
         document: null,
         order: module?.order || 0,
         is_active: module?.is_active ?? true,
+        _method: module ? 'put' : 'post',
     });
 
     const submit = (e) => {
         e.preventDefault();
         
-        if (module) {
-            post(route("admin.learning.modules.update", module.id), {
-                _method: 'put',
-                forceFormData: true,
-                onSuccess: () => {
-                    reset();
-                    onSuccess?.();
-                }
-            });
-        } else {
-            post(route("admin.learning.modules.store"), {
-                forceFormData: true,
-                onSuccess: () => {
-                    reset();
-                    onSuccess?.();
-                }
-            });
-        }
+        const routeUrl = module 
+            ? route("admin.learning.modules.update", module.id)
+            : route("admin.learning.modules.store");
+        
+        post(routeUrl, {
+            forceFormData: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onSuccess?.();
+            },
+            onError: (errors) => {
+                console.error('Upload errors:', errors);
+            }
+        });
     };
 
     return (

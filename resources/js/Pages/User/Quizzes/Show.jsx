@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function Show({ auth, quiz }) {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -26,21 +27,20 @@ export default function Show({ auth, quiz }) {
 
         setLoading(true);
         try {
-            const response = await fetch(route('learning.quizzes.submit', quiz.id), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: JSON.stringify({ answers }),
+            const response = await axios.post(route('learning.quizzes.submit', quiz.id), {
+                answers: answers
             });
 
-            const data = await response.json();
-            setResult(data);
+            setResult(response.data);
             setSubmitted(true);
         } catch (error) {
             console.error('Error submitting quiz:', error);
-            alert('Terjadi kesalahan saat mengirim jawaban');
+            if (error.response?.status === 401) {
+                alert('Sesi Anda telah berakhir. Silakan login kembali.');
+                window.location.href = route('login');
+            } else {
+                alert('Terjadi kesalahan saat mengirim jawaban');
+            }
         }
         setLoading(false);
     };

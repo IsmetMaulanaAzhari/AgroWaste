@@ -140,14 +140,17 @@ class LearningController extends Controller
 
     public function submitQuiz(Request $request, Quiz $quiz)
     {
-        $answers = $request->validate([
-            'answers' => 'required|array',
-            'answers.*' => 'required|string',
-        ])['answers'];
+        try {
+            $validated = $request->validate([
+                'answers' => 'required|array',
+                'answers.*' => 'required|string',
+            ]);
+            
+            $answers = $validated['answers'];
 
-        $quiz->load('questions');
-        
-        $totalPoints = 0;
+            $quiz->load('questions');
+            
+            $totalPoints = 0;
         $earnedPoints = 0;
         $results = [];
 
@@ -183,5 +186,16 @@ class LearningController extends Controller
             'passing_score' => $quiz->passing_score ?? 70,
             'results' => $results,
         ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan pada server',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
