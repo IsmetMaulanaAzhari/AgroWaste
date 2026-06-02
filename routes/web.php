@@ -38,6 +38,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/home', [\App\Http\Controllers\Admin\AdminHomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
     
     // Module management routes (to be implemented)

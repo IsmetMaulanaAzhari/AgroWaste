@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->role_id === 1) {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.home');
             }
             return redirect()->route('home');
         }
@@ -33,7 +33,7 @@ class AuthController extends Controller
             
             // Redirect based on role
             if (Auth::user()->role_id === 1) {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.home');
             }
             
             return redirect()->intended('home');
@@ -48,7 +48,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->role_id === 1) {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.home');
             }
             return redirect()->route('home');
         }
