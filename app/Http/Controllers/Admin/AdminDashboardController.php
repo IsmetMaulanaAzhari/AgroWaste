@@ -9,6 +9,7 @@ use App\Models\Video;
 use App\Models\Quiz;
 use App\Models\QuizAttempt;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AdminDashboardController extends Controller
 {
@@ -40,6 +41,6 @@ class AdminDashboardController extends Controller
             }
         ])->get();
 
-        return view('admin.dashboard', compact('stats', 'recentAttempts', 'modules'));
+        return Inertia::render('Admin/Dashboard', compact('stats', 'recentAttempts', 'modules'));
     }
 }
