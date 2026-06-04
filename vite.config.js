@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+    base: '/AgroWaste/',
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.jsx'],
@@ -14,5 +15,9 @@ export default defineConfig({
         alias: {
             '@': '/resources/js',
         },
+    },
+    build: {
+        outDir: 'dist',
+        emptyOutDir: true,
     },
 });
